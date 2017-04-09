@@ -11,7 +11,24 @@
     tools:context="com.chtv.korsoapp.MainActivity">
 
     <TextView
+        android:id="@+id/hello"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hello World!" />
+
+    <TextView
+        android:id="@+id/ido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hello"
+        android:text="ezitt"/>
+
+
+    <Button
+        android:id="@+id/gomb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ido"
+        android:text="Press me!"/>
+
 </RelativeLayout>
