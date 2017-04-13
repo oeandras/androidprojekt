@@ -23,12 +23,19 @@
         android:layout_below="@id/hello"
         android:text="ezitt"/>
 
-
     <Button
         android:id="@+id/gomb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ido"
         android:text="Press me!"/>
+
+    <TextView
+        android:id="@+id/rezges"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gomb"
+        android:text="asdasd"
+        android:textSize="30sp"/>
 
 </RelativeLayout>
