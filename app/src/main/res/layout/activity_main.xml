@@ -14,28 +14,21 @@
         android:id="@+id/hello"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-
-    <TextView
-        android:id="@+id/ido"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/hello"
-        android:text="ezitt"/>
+        android:text="Welcome to BeerContest!"
+        android:textSize="30sp" />
 
     <Button
-        android:id="@+id/gomb"
+        android:id="@+id/practice_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ido"
-        android:text="Press me!"/>
+        android:layout_below="@id/hello"
+        android:text="New practice!"/>
 
-    <TextView
-        android:id="@+id/rezges"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/event_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gomb"
-        android:text="asdasd"
-        android:textSize="30sp"/>
+        android:layout_below="@id/practice_button"
+        android:text="New event!"/>
 
 </RelativeLayout>

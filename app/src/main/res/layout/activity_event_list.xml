@@ -10,4 +10,27 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.chtv.korsoapp.EventListActivity">
 
+    <TextView
+    android:id="@+id/events"
+    android:text="Events"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="30sp"/>
+
+    <Button
+        android:id="@+id/create_event_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create new event!"/>
+
+    <ListView
+    android:id="@+id/list"
+    android:layout_below="@id/events"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+        android:layout_above="@id/create_event_button"
+        />
+
+
+
 </RelativeLayout>
