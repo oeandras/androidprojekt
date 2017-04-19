@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
+        <dex dex="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_8480ced7a1e35ef0483ea62bd0c51f1cb7f27eee\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tk95s\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\25.3.1\support-annotations-25.3.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.3.1_e1d007c6a7336a8381636bbd5f8da1ed053a56df\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tk95s\.android\build-cache\d9fcc0a64fdfa62effae36a54b4efe5b74735841\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_653c338a57a2fa4198747e40cd5bbc8a12d78a18\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tk95s\.android\build-cache\b6e256ea45fe466f55874a27b6ec4475d9fcd2a7\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_defaba188e0693aeb4967cf48ba9d92daf5bc7e2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tk95s\.android\build-cache\34c5871e3792de191d7095fbb7523d07b0bb6477\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_21b98895a37e99291757681c867198a3d341a2ab\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tk95s\.android\build-cache\38f9fae9e6da98d56c396e9799d276ead60b9ef6\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_91c9aff51eabf81b8395d09eb6339a3788e10e7f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tk95s\.android\build-cache\faba0d77bcf055a27398af6317b9f81aba4fdbd6\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_1be882367640b369b6e956d8141d051375fbfae9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tk95s\.android\build-cache\20e37b15be0d1e858f8e25afc838a10b7a431cab\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_2cfec30aeab8e59210e54f3bebb310ab0639d6b4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tk95s\.android\build-cache\4c62fb36fd29e12ee1770a28e8e72f6346cbf23f\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_4821c8c2df3478c56cfc07029c0e94b331c976f7\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tk95s\.android\build-cache\ea4f5945d62eca4666503954f5eee9326cf2bd29\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_c3251bf926e93b13ee3aa43f8d3723023665ede0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tk95s\.android\build-cache\8df0685a376cce0883f07eb146ab58fe7d0877c9\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_6b7174b8662bca67b5b4646ef1ca6fd3bc28f306\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tk95s\.android\build-cache\11a0c7abe1cedf4f1b9f38ae526582fdfa43b9e2\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_51bbc97b0f6e1bf7b9a35ca7da01aede63abec7e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c660bdcf668d0ef5612835b105e5f7647d5fc1a2">
+        <dex dex="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_6dd3d3feaaf36a3dea1d5634b1336da582f81b1d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tk95s\.android\build-cache\dd0be484104be1c7366b74cab1b158d41d6841e0\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_029b23415b313614f2c7dc7da27623a822419e70\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\tk95s\.android\build-cache\f48cdcba65fbd19c18b3c794418ceb663f96ef19\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="C:\CheckoutAndroid\androidprojekt\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_7f50f3f015873289a2295952d24ec8e8ea2e454d\classes.dex" />
+    </item>
+
+</items>
