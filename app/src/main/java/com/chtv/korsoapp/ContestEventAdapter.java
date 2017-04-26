@@ -75,5 +75,6 @@ public class ContestEventAdapter extends RecyclerView.Adapter<ContestEventViewHo
 
     public ContestEventAdapter(ObservableList<ContestEvent> contestEvents) {
         this.contestEvents = contestEvents;
+        contestEvents.addOnListChangedCallback(callback);
     }
 }

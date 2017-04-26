@@ -94,7 +94,7 @@ public class EventListActivity extends AppCompatActivity {
         testSessions.get(1).setPlayers(testPlayersForSecondSession);
 
         contestEvents.get(0).setContestSessions(testSessions);
-        
+
         this.viewModel = new EventListViewModel((ObservableList<ContestEvent>) contestEvents);
     }
 }

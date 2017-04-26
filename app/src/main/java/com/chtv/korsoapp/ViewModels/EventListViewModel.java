@@ -22,4 +22,8 @@ public class EventListViewModel extends BaseObservable {
     public EventListViewModel(ObservableList<ContestEvent> contestEvents) {
         this.contestEvents = contestEvents;
     }
+
+    public void onCreateNewEventClick(){
+        contestEvents.add(contestEvents.get(0));
+    }
 }
