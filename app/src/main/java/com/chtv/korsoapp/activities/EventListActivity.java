@@ -1,4 +1,4 @@
-package com.chtv.korsoapp;
+package com.chtv.korsoapp.activities;
 
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
@@ -11,6 +11,7 @@ import com.chtv.korsoapp.Models.ContestSession;
 import com.chtv.korsoapp.Models.Player;
 import com.chtv.korsoapp.Models.PlayerResult;
 import com.chtv.korsoapp.Models.Scoreboard;
+import com.chtv.korsoapp.R;
 import com.chtv.korsoapp.ViewModels.EventListViewModel;
 import com.chtv.korsoapp.databinding.ActivityEventListBinding;
 
