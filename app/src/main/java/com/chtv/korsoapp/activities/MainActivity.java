@@ -32,9 +32,6 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.New
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setViewModel(new MainViewModel(this));
-//        setContentView(R.layout.activity_main);
-
-
 
     }
 
@@ -42,17 +39,13 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.New
     protected void onResume() {
         super.onResume();
 
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-
     }
-
-
 
     @Override
     public void onNewPracticeClick() {

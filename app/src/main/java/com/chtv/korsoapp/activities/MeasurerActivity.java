@@ -84,7 +84,7 @@ public class MeasurerActivity extends AppCompatActivity implements MeasurerViewM
         chronometer.stop();
         Calendar cal = Calendar.getInstance().getInstance();
         cal.setTime(viewModel.PlayerScore);
-        Toast.makeText(this, "Your tiem is: "+ cal.get(Calendar.SECOND)+" seconds.", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Your tiem is: "+ cal.get(Calendar.SECOND)+" seconds.", Toast.LENGTH_SHORT).show();
     }
 
 }
