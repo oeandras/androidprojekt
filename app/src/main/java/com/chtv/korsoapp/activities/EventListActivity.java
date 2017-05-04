@@ -80,10 +80,10 @@ public class EventListActivity extends AppCompatActivity {
         testScoreboardsForFirstSession.add(new Scoreboard(testSessions.get(1), "Test Scoreboard 3"));
 
         List<PlayerResult> testPlayerResults = new ArrayList<PlayerResult>();
-        testPlayerResults.add(new PlayerResult(testPlayersForFirstSession.get(0), testScoreboardsForFirstSession.get(0), 1));
+        testPlayerResults.add(new PlayerResult(testPlayersForFirstSession.get(0), testScoreboardsForFirstSession.get(0), new Date(1L)));
         testPlayersForFirstSession.get(0).setPlayerResults(testPlayerResults);
 
-        testPlayerResults.add(new PlayerResult(testPlayersForFirstSession.get(1), testScoreboardsForFirstSession.get(0), 2));
+        testPlayerResults.add(new PlayerResult(testPlayersForFirstSession.get(1), testScoreboardsForFirstSession.get(0), new Date(2L)));
         testScoreboardsForFirstSession.get(0).setPlayerResults(testPlayerResults);
 
         testPlayerResults.remove(0);

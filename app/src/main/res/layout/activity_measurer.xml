@@ -7,6 +7,8 @@
         <variable
             name="viewModel"
             type="com.chtv.korsoapp.ViewModels.MeasurerViewModel" />
+        <import type="com.chtv.korsoapp.ViewModels.MeasurerViewModel.MeasurerViewModelState"/>
+        <import type="android.view.View"/>
     </data>
 
     <RelativeLayout
@@ -25,13 +27,23 @@
             android:layout_height="wrap_content"
             android:text="@{viewModel.getPlayerName(), default=PlayerName}"/>
 
-        <FrameLayout
-            android:id="@+id/fragment_container"
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:visibility="@{viewModel.state == MeasurerViewModelState.COUNT_DOWN ? View.GONE: View.VISIBLE}"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/playername_text">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/playername_text"
+            android:gravity="center">
 
-        </FrameLayout>
+        </Chronometer>
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/countdown_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/playername_text"
+            android:gravity="center"
+            android:visibility="@{viewModel.state == MeasurerViewModelState.MEASURE ? View.GONE : View.VISIBLE}"
+            android:text="@{viewModel.remainingTime, default=00}"/>
 
     </RelativeLayout>
 </layout>

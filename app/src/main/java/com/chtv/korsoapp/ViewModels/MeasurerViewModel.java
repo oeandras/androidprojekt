@@ -6,10 +6,13 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.CountDownTimer;
+import android.os.SystemClock;
 
 import com.android.databinding.library.baseAdapters.BR;
 import com.chtv.korsoapp.Models.Player;
 import com.chtv.korsoapp.RezgesTarolo;
+
+import java.util.Date;
 
 /**
  * Created by cregz on 2017.05.02..
@@ -17,11 +20,13 @@ import com.chtv.korsoapp.RezgesTarolo;
 
 public class MeasurerViewModel extends BaseViewModel {
     private Player player;
-    private SensorManager sensorManager;
     private CountDownTimer countdownTimer;
     private long remainingTime;
-    private IMeasurerView view;
     private RezgesTarolo Ztarolo;
+    private SensorManager sensorManager;
+    private IMeasurerView view;
+    private long measureStart;
+
     private MeasurerViewModelState state;
 
 
@@ -34,9 +39,19 @@ public class MeasurerViewModel extends BaseViewModel {
         return "0"+remainingTime/1000;
     }
 
+    @Bindable
+    public MeasurerViewModelState getState() {
+        return state;
+    }
+
+    private void setState(MeasurerViewModelState state) {
+        this.state = state;
+        notifyPropertyChanged(BR.state);
+    }
+
     public MeasurerViewModel(Player player, SensorManager sensorManager, IMeasurerView iMeasurerView) {
         this.player = player;
-        this.remainingTime = 0;
+        this.remainingTime = 5;
         this.sensorManager = sensorManager;
         this.view = iMeasurerView;
         this.countdownTimer = new CountDownTimer(5000, 1000) {    //az 50 tűnik annak a bűvös számnak ahol a procit nem hajtja mint az állat és folyamatos a számláló
@@ -51,16 +66,20 @@ public class MeasurerViewModel extends BaseViewModel {
                 remainingTime=0;
                 notifyPropertyChanged(BR.remainingTime);
                 view.onCountDownFinished();
+                setState(MeasurerViewModelState.MEASURE);
+                startMeasure();
             }
 
         };
         this.Ztarolo = new RezgesTarolo();
-        state = MeasurerViewModelState.COUNT_DOWN;
+        setState(MeasurerViewModelState.COUNT_DOWN);
     }
 
     @Override
     public void onResume() {
-        countdownTimer.start();
+        if(state == MeasurerViewModelState.COUNT_DOWN) {
+            countdownTimer.start();
+        }
     }
 
     @Override
@@ -80,12 +99,15 @@ public class MeasurerViewModel extends BaseViewModel {
 
     private void startMeasure(){
         state = MeasurerViewModelState.MEASURE;
-        view.onStartMeasure();
+        measureStart = SystemClock.elapsedRealtime();
+        view.onStartMeasure(measureStart);
         sensorManager.registerListener(sensorListener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_FASTEST);
     }
 
     private void stopMeasure(){
-
+        view.onStopMeasure();
+        Date playerScore = new Date(SystemClock.elapsedRealtime() - measureStart);
+        //TODO: save result for player
     }
 
     private SensorEventListener sensorListener = new SensorEventListener() {
@@ -94,7 +116,7 @@ public class MeasurerViewModel extends BaseViewModel {
             float[] values = event.values;
             Ztarolo.addValue(values[2]);
             if (Ztarolo.Utolsografertek() > Ztarolo.Atlag() + 2 || Ztarolo.Utolsografertek() < Ztarolo.Atlag() - 2) {
-                view.onStopMeasure();
+                stopMeasure();
             } else {
                 //rezges.setText("semmi");
             }
@@ -108,14 +130,16 @@ public class MeasurerViewModel extends BaseViewModel {
 
     public enum MeasurerViewModelState{
         COUNT_DOWN,
-        MEASURE
+        MEASURE,
+        IDLE
     }
 
     //nincs oteletem hogy kene hivni
     public interface IMeasurerView {
+        void onStartCountDown();
         void onCountDownFinished();
 
-        void onStartMeasure();
+        void onStartMeasure(long base);
         void onStopMeasure();
 
     }

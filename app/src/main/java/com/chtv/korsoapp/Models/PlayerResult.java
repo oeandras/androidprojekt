@@ -3,6 +3,8 @@ package com.chtv.korsoapp.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Date;
+
 import javax.xml.datatype.Duration;
 
 /**
@@ -11,15 +13,15 @@ import javax.xml.datatype.Duration;
 
 public class PlayerResult implements Parcelable {
     String name;
-    int time; //TODO: Time format
+    Date time; //TODO: Time format
     Player player;
     Scoreboard scoreboard;
 
-    public int getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
@@ -47,7 +49,7 @@ public class PlayerResult implements Parcelable {
         this.scoreboard = scoreboard;
     }
 
-    public PlayerResult(Player player, Scoreboard scoreboard, int time) {
+    public PlayerResult(Player player, Scoreboard scoreboard, Date time) {
         this.player = player;
         this.time = time;
         this.scoreboard = scoreboard;
@@ -56,7 +58,7 @@ public class PlayerResult implements Parcelable {
 
     protected PlayerResult(Parcel in) {
         name = in.readString();
-        time = in.readInt();
+        time = new Date(in.readLong());
         player = (Player) in.readValue(Player.class.getClassLoader());
         scoreboard = (Scoreboard) in.readValue(Scoreboard.class.getClassLoader());
     }
@@ -69,7 +71,7 @@ public class PlayerResult implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
-        dest.writeInt(time);
+        dest.writeLong(time.getTime());
         dest.writeValue(player);
         dest.writeValue(scoreboard);
     }
