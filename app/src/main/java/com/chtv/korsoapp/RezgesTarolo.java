@@ -33,7 +33,7 @@ public class RezgesTarolo {
 
     private void init(){
         this.values=new ArrayList<>(MAX_VALUES);
-        //maskulonben rogton leall
+        //gravitacios gyorsulas bezavar
         for (int i=0; i<MAX_VALUES;i++)
             this.values.add(9.8f);
     }

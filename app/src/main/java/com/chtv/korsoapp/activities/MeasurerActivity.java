@@ -11,12 +11,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.CalendarView;
 import android.widget.Chronometer;
+import android.widget.Toast;
 
 import com.chtv.korsoapp.Models.Player;
 import com.chtv.korsoapp.R;
 import com.chtv.korsoapp.ViewModels.MeasurerViewModel;
 import com.chtv.korsoapp.databinding.ActivityMeasurerBinding;
+
+import java.util.Calendar;
 
 public class MeasurerActivity extends AppCompatActivity implements MeasurerViewModel.IMeasurerView {
     Player player;
@@ -78,6 +82,9 @@ public class MeasurerActivity extends AppCompatActivity implements MeasurerViewM
     @Override
     public void onStopMeasure() {
         chronometer.stop();
+        Calendar cal = Calendar.getInstance().getInstance();
+        cal.setTime(viewModel.PlayerScore);
+        Toast.makeText(this, "Your tiem is: "+ cal.get(Calendar.SECOND)+" seconds.", Toast.LENGTH_LONG).show();
     }
 
 }

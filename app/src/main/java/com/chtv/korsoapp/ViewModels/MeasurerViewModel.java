@@ -27,6 +27,9 @@ public class MeasurerViewModel extends BaseViewModel {
     private IMeasurerView view;
     private long measureStart;
 
+    //temporary
+    public Date PlayerScore;
+
     private MeasurerViewModelState state;
 
 
@@ -105,9 +108,10 @@ public class MeasurerViewModel extends BaseViewModel {
     }
 
     private void stopMeasure(){
-        view.onStopMeasure();
-        Date playerScore = new Date(SystemClock.elapsedRealtime() - measureStart);
         //TODO: save result for player
+        Date playerScore = new Date(SystemClock.elapsedRealtime() - measureStart);
+        PlayerScore = playerScore;
+        view.onStopMeasure();
     }
 
     private SensorEventListener sensorListener = new SensorEventListener() {
