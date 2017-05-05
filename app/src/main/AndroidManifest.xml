@@ -27,7 +27,9 @@
         <activity android:name=".activities.EventActivity" />
         <activity android:name=".activities.SessionActivity" />
         <activity android:name=".activities.ScoreboardActivity" />
-        <activity android:name=".activities.MeasurerActivity"></activity>
+        <activity android:name=".activities.MeasurerActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="Measure"/>
     </application>
 
 </manifest>

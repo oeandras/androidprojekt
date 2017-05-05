@@ -26,7 +26,7 @@ public class MeasurerActivity extends AppCompatActivity implements MeasurerViewM
     Player player;
     int score; //TODO: Time format
     private MeasurerViewModel viewModel;
-    private Chronometer chronometer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class MeasurerActivity extends AppCompatActivity implements MeasurerViewM
 
         ActivityMeasurerBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_measurer);
         binding.setViewModel(viewModel);
-        this.chronometer = (Chronometer) binding.getRoot().findViewById(R.id.chronometer);
+
     }
 
     @Override
@@ -75,13 +75,11 @@ public class MeasurerActivity extends AppCompatActivity implements MeasurerViewM
 
     @Override
     public void onStartMeasure(long base) {
-        chronometer.setBase(base);
-        chronometer.start();
+
     }
 
     @Override
     public void onStopMeasure() {
-        chronometer.stop();
         Calendar cal = Calendar.getInstance().getInstance();
         cal.setTime(viewModel.PlayerScore);
         Toast.makeText(this, "Your time is: "+ cal.get(Calendar.SECOND)+" seconds.", Toast.LENGTH_SHORT).show();
