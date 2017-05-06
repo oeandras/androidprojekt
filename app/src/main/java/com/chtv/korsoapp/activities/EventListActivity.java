@@ -1,5 +1,8 @@
-package com.chtv.korsoapp;
+package com.chtv.korsoapp.activities;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ObservableArrayList;
+import android.databinding.ObservableList;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -8,6 +11,9 @@ import com.chtv.korsoapp.Models.ContestSession;
 import com.chtv.korsoapp.Models.Player;
 import com.chtv.korsoapp.Models.PlayerResult;
 import com.chtv.korsoapp.Models.Scoreboard;
+import com.chtv.korsoapp.R;
+import com.chtv.korsoapp.ViewModels.EventListViewModel;
+import com.chtv.korsoapp.databinding.ActivityEventListBinding;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,18 +26,23 @@ public class EventListActivity extends AppCompatActivity {
     Date from;
     Date until;
 
+    private EventListViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        contestEvents = new ArrayList<ContestEvent>();
+        contestEvents = new ObservableArrayList<ContestEvent>();
         name = "";
         from = null;
         until = null;
 
         createMockData();
 
-        setContentView(R.layout.activity_event_list);
+        ActivityEventListBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_event_list);
+        binding.setViewModel(viewModel);
+
+        //setContentView(R.layout.activity_event_list);
     }
 
     /*Testing only*/
@@ -69,10 +80,10 @@ public class EventListActivity extends AppCompatActivity {
         testScoreboardsForFirstSession.add(new Scoreboard(testSessions.get(1), "Test Scoreboard 3"));
 
         List<PlayerResult> testPlayerResults = new ArrayList<PlayerResult>();
-        testPlayerResults.add(new PlayerResult(testPlayersForFirstSession.get(0), testScoreboardsForFirstSession.get(0), 1));
+        testPlayerResults.add(new PlayerResult(testPlayersForFirstSession.get(0), testScoreboardsForFirstSession.get(0), new Date(1L)));
         testPlayersForFirstSession.get(0).setPlayerResults(testPlayerResults);
 
-        testPlayerResults.add(new PlayerResult(testPlayersForFirstSession.get(1), testScoreboardsForFirstSession.get(0), 2));
+        testPlayerResults.add(new PlayerResult(testPlayersForFirstSession.get(1), testScoreboardsForFirstSession.get(0), new Date(2L)));
         testScoreboardsForFirstSession.get(0).setPlayerResults(testPlayerResults);
 
         testPlayerResults.remove(0);
@@ -84,5 +95,7 @@ public class EventListActivity extends AppCompatActivity {
         testSessions.get(1).setPlayers(testPlayersForSecondSession);
 
         contestEvents.get(0).setContestSessions(testSessions);
+
+        this.viewModel = new EventListViewModel((ObservableList<ContestEvent>) contestEvents);
     }
 }

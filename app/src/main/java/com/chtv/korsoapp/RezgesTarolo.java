@@ -33,8 +33,9 @@ public class RezgesTarolo {
 
     private void init(){
         this.values=new ArrayList<>(MAX_VALUES);
+        //gravitacios gyorsulas bezavar
         for (int i=0; i<MAX_VALUES;i++)
-            this.values.add(0f);
+            this.values.add(9.8f);
     }
 
     public void addValue(float value){

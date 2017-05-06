@@ -1,34 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.chtv.korsoapp.MainActivity">
-
-    <TextView
-        android:id="@+id/hello"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.chtv.korsoapp.ViewModels.MainViewModel"/>
+    </data>
+    <RelativeLayout
+        android:id="@+id/activity_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Welcome to BeerContest!"
-        android:textSize="30sp" />
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.chtv.korsoapp.activities.MainActivity">
 
-    <Button
-        android:id="@+id/practice_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/hello"
-        android:text="New practice!"/>
+        <TextView
+            android:id="@+id/hello"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome to BeerContest!"
+            android:textSize="30sp" />
 
-    <Button
-        android:id="@+id/event_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/practice_button"
-        android:text="New event!"/>
+        <Button
+            android:id="@+id/practice_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hello"
+            android:text="New practice!"
+            android:onClick="@{() -> viewModel.onNewPracticeClick()}"/>
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/event_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/practice_button"
+            android:text="New event!"
+            android:onClick="@{() -> viewModel.onNewEventClick()}"/>
+
+    </RelativeLayout>
+</layout>
