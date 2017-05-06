@@ -15,6 +15,7 @@ import android.widget.CalendarView;
 import android.widget.Chronometer;
 import android.widget.Toast;
 
+import com.chtv.korsoapp.AccelerometerStopwatch;
 import com.chtv.korsoapp.Models.Player;
 import com.chtv.korsoapp.R;
 import com.chtv.korsoapp.ViewModels.MeasurerViewModel;
@@ -36,7 +37,7 @@ public class MeasurerActivity extends AppCompatActivity implements MeasurerViewM
         if(b != null)
             this.player = b.getParcelable("player");
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        viewModel = new MeasurerViewModel(player, sensorManager, this);
+        viewModel = new MeasurerViewModel(player, this, new AccelerometerStopwatch(sensorManager));
 
         ActivityMeasurerBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_measurer);
         binding.setViewModel(viewModel);
