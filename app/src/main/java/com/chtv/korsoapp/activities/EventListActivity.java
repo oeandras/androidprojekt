@@ -1,8 +1,10 @@
 package com.chtv.korsoapp.activities;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
+import android.os.ParcelUuid;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -15,6 +17,7 @@ import com.chtv.korsoapp.Models.Scoreboard;
 import com.chtv.korsoapp.R;
 import com.chtv.korsoapp.ViewModels.EventListViewModel;
 import com.chtv.korsoapp.databinding.ActivityEventListBinding;
+import com.chtv.korsoapp.events.ContestEventSelectedEvent;
 import com.chtv.korsoapp.events.ShowToastEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -24,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class EventListActivity extends AppCompatActivity {
     List<ContestEvent> contestEvents;
@@ -65,6 +69,14 @@ public class EventListActivity extends AppCompatActivity {
     @Subscribe
     public void onShowToastEvent(ShowToastEvent event){
         Toast.makeText(this, event.getMessage(), event.getIsLong() ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
+    }
+
+    @Subscribe
+    public void onContestEventSelected(ContestEventSelectedEvent contestEvent){
+        Intent intent = new Intent(this, EventActivity.class);
+        intent.putExtra("contestEvent", contestEvent.getContestEvent());
+        startActivity(intent);
+
     }
 
     /*Testing only*/
