@@ -75,7 +75,7 @@ public class MeasurerActivity extends AppCompatActivity implements MeasurerViewM
     }
 
     @Override
-    public void onStartMeasure(long base) {
+    public void onStartMeasure() {
 
     }
 

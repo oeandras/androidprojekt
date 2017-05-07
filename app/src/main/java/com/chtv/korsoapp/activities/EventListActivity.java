@@ -5,6 +5,7 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.chtv.korsoapp.Models.ContestEvent;
 import com.chtv.korsoapp.Models.ContestSession;
@@ -14,6 +15,10 @@ import com.chtv.korsoapp.Models.Scoreboard;
 import com.chtv.korsoapp.R;
 import com.chtv.korsoapp.ViewModels.EventListViewModel;
 import com.chtv.korsoapp.databinding.ActivityEventListBinding;
+import com.chtv.korsoapp.events.ShowToastEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,6 +48,23 @@ public class EventListActivity extends AppCompatActivity {
         binding.setViewModel(viewModel);
 
         //setContentView(R.layout.activity_event_list);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onShowToastEvent(ShowToastEvent event){
+        Toast.makeText(this, event.getMessage(), event.getIsLong() ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
     }
 
     /*Testing only*/
