@@ -5,6 +5,7 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 
 import com.chtv.korsoapp.Models.ContestEvent;
+import com.chtv.korsoapp.events.ContestEventSelectedEvent;
 import com.chtv.korsoapp.events.ShowToastEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,6 +32,6 @@ public class EventListViewModel extends BaseObservable {
     }
 
     public void onItemClick(ContestEvent contestEvent){
-        EventBus.getDefault().post(new ShowToastEvent(contestEvent.getName(), false));
+        EventBus.getDefault().post(new ContestEventSelectedEvent(contestEvent));
     }
 }
