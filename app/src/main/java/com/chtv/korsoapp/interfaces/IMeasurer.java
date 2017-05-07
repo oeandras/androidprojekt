@@ -6,8 +6,7 @@ package com.chtv.korsoapp.interfaces;
  */
 
 public interface IMeasurer {
-    void init(long delay, long period);
-    void startMeasure();
+    void startMeasure(long delay, long period);
     void stopMeasure();
     long getElapsedTime();
     void reset();

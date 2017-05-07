@@ -96,7 +96,6 @@ public class MeasurerViewModel extends BaseViewModel implements Observer {
         this.remainingTime = 5;
         this.view = iMeasurerView;
         this.sw = stopwatch;
-        sw.init(0,50);
         setState(MeasurerViewModelState.IDLE);
 
         //setState(MeasurerViewModelState.COUNT_DOWN);
@@ -125,7 +124,7 @@ public class MeasurerViewModel extends BaseViewModel implements Observer {
     }
 
     private void startMeasure(){
-        sw.startMeasure();
+        sw.startMeasure(0,50);
     }
 
     //force stop e.g activity loses focus..

@@ -18,9 +18,6 @@ import java.util.TimerTask;
 
 public class AccelerometerStopwatch extends BaseMeasurer {
     private Timer timer;
-    //ms
-    private long delay;
-    private long period;
     private long startTime;
     private long elapsedTime;
 
@@ -28,13 +25,10 @@ public class AccelerometerStopwatch extends BaseMeasurer {
 
     private SensorManager sensorManager;
 
-    private boolean initialized;
-
     public AccelerometerStopwatch(SensorManager sensorManager) {
         this.timer = new Timer();
         this.Ztarolo=new RezgesTarolo();
         this.sensorManager = sensorManager;
-        initialized=false;
     }
 
     private void setElapsedTime(long elapsedTime) {
@@ -43,20 +37,14 @@ public class AccelerometerStopwatch extends BaseMeasurer {
         notifyObservers();
     }
 
-    @Override
-    public void init(long delay, long period) {
-        this.delay = delay;
-        this.period = period;
+    private void init() {
         this.elapsedTime=0;
         this.Ztarolo= new RezgesTarolo();
-        initialized=true;
     }
 
     @Override
-    public void startMeasure() {
-        if(!initialized){
-            throw new RuntimeException("Must initialize stopwatch before calling startMeasure().");
-        }
+    public void startMeasure(long delay, long period) {
+        init();
         this.startTime = SystemClock.elapsedRealtime();
         this.timer.schedule(new TimerTask() {
             @Override
@@ -83,7 +71,7 @@ public class AccelerometerStopwatch extends BaseMeasurer {
     @Override
     public void reset() {
         this.timer.cancel();
-        init(delay, period);
+        init();
     }
 
     private SensorEventListener sensorListener = new SensorEventListener() {
