@@ -3,9 +3,11 @@ package com.chtv.korsoapp;
 import android.databinding.ObservableList;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.chtv.korsoapp.Models.ContestEvent;
+import com.chtv.korsoapp.ViewModels.EventListViewModel;
 import com.chtv.korsoapp.databinding.ContesteventViewBinding;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
  */
 
 public class ContestEventAdapter extends RecyclerView.Adapter<ContestEventViewHolder> {
+    private final EventListViewModel viewModel;
     ObservableList<ContestEvent> contestEvents;
 
     ObservableList.OnListChangedCallback<ObservableList<ContestEvent>> callback = new ObservableList.OnListChangedCallback<ObservableList<ContestEvent>>() {
@@ -50,11 +53,11 @@ public class ContestEventAdapter extends RecyclerView.Adapter<ContestEventViewHo
     public ContestEventViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         ContesteventViewBinding contestBinding = ContesteventViewBinding.inflate(inflater, viewGroup, false);
-        return new ContestEventViewHolder(contestBinding);
+        return new ContestEventViewHolder(contestBinding, viewModel);
     }
 
     @Override
-    public void onBindViewHolder(ContestEventViewHolder contestEventViewHolder, int i) {
+    public void onBindViewHolder(final ContestEventViewHolder contestEventViewHolder, int i) {
         ContestEvent item = getItemForPosition(i);
         contestEventViewHolder.bind(item);
     }
@@ -73,8 +76,9 @@ public class ContestEventAdapter extends RecyclerView.Adapter<ContestEventViewHo
         return contestEvents== null ? null : contestEvents.get(position);
     }
 
-    public ContestEventAdapter(ObservableList<ContestEvent> contestEvents) {
+    public ContestEventAdapter(ObservableList<ContestEvent> contestEvents, EventListViewModel viewModel) {
         this.contestEvents = contestEvents;
+        this.viewModel = viewModel;
         contestEvents.addOnListChangedCallback(callback);
     }
 }

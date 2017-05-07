@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chtv.korsoapp.Models.ContestEvent;
+import com.chtv.korsoapp.ViewModels.EventListViewModel;
 import com.chtv.korsoapp.databinding.ContesteventViewBinding;
 
 /**
@@ -13,14 +14,20 @@ import com.chtv.korsoapp.databinding.ContesteventViewBinding;
 
 public class ContestEventViewHolder extends RecyclerView.ViewHolder {
     private final ContesteventViewBinding binding;
+    private final EventListViewModel viewModel;
 
-    public ContestEventViewHolder(ContesteventViewBinding binding) {
+    public ContestEventViewHolder(ContesteventViewBinding binding, EventListViewModel viewModel) {
         super(binding.getRoot());
         this.binding=binding;
+        this.viewModel = viewModel;
+        binding.setViewModel(viewModel);
+
     }
 
     public void bind(ContestEvent contestEvent){
         binding.setContestEvent(contestEvent);
         binding.executePendingBindings();
     }
+
+
 }
