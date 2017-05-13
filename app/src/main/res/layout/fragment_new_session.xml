@@ -1,0 +1,109 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.chtv.korsoapp.fragments.NewSessionFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/event_name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Event Name: "
+            android:layout_alignBaseline="@+id/event_name"
+            android:layout_alignBottom="@+id/event_name"
+            android:layout_alignLeft="@+id/session_name_textview"
+            android:layout_alignStart="@+id/session_name_textview" />
+
+        <TextView
+            android:id="@+id/event_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:layout_marginLeft="19dp"
+            android:layout_marginStart="19dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/session_name_textview"
+            android:layout_toEndOf="@+id/session_name_textview"
+            android:layout_marginTop="19dp" />
+
+        <TextView
+            android:id="@+id/session_name_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Session Name: "
+            android:layout_alignBaseline="@+id/session_name_edittext"
+            android:layout_alignBottom="@+id/session_name_edittext"
+            android:layout_alignRight="@+id/button2"
+            android:layout_alignEnd="@+id/button2" />
+
+        <EditText
+            android:id="@+id/session_name_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="enter name"
+            android:layout_marginTop="18dp"
+            android:layout_below="@+id/event_name"
+            android:layout_alignLeft="@+id/event_name"
+            android:layout_alignStart="@+id/event_name" />
+
+        <TextView
+            android:id="@+id/players_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/session_name_textview"
+            android:layout_marginTop="17dp"
+            android:text="Players" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/player_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/button2"
+            android:layout_below="@+id/players_text"
+            android:layout_toStartOf="@+id/cancel_button"
+            android:layout_toLeftOf="@+id/cancel_button">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/cancel_button"
+            android:layout_alignBottom="@+id/cancel_button"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
+            android:text="OK" />
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="11dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginRight="11dp"
+            android:text="Cancel" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/player_list"
+            android:layout_toEndOf="@+id/player_list"
+            android:layout_toRightOf="@+id/player_list"
+            android:text="Add" />
+
+    </RelativeLayout>
+
+</FrameLayout>
