@@ -29,5 +29,4 @@ public class ContestEventViewHolder extends RecyclerView.ViewHolder {
         binding.executePendingBindings();
     }
 
-
 }

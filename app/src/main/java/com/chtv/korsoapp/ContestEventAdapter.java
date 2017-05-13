@@ -12,42 +12,16 @@ import com.chtv.korsoapp.databinding.ContesteventViewBinding;
 
 import java.util.List;
 
+import io.realm.RealmCollection;
+import io.realm.RealmList;
+
 /**
  * Created by cregz on 2017.04.25..
  */
 
 public class ContestEventAdapter extends RecyclerView.Adapter<ContestEventViewHolder> {
     private final EventListViewModel viewModel;
-    ObservableList<ContestEvent> contestEvents;
-
-    ObservableList.OnListChangedCallback<ObservableList<ContestEvent>> callback = new ObservableList.OnListChangedCallback<ObservableList<ContestEvent>>() {
-        @Override
-        public void onChanged(ObservableList<ContestEvent> contestEvents) {
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public void onItemRangeChanged(ObservableList<ContestEvent> contestEvents, int i, int i1) {
-            notifyItemRangeChanged(i, i1);
-        }
-
-        @Override
-        public void onItemRangeInserted(ObservableList<ContestEvent> contestEvents, int i, int i1) {
-            notifyItemRangeInserted(i, i1);
-        }
-
-        @Override
-        public void onItemRangeMoved(ObservableList<ContestEvent> contestEvents, int i, int i1, int i2) {
-            notifyItemRangeRemoved(i, i2);
-            notifyItemRangeRemoved(i1, i2);
-        }
-
-        @Override
-        public void onItemRangeRemoved(ObservableList<ContestEvent> contestEvents, int i, int i1) {
-            notifyItemRangeRemoved(i, i1);
-        }
-    };
-    
+    RealmList<ContestEvent> contestEvents;
     
     @Override
     public ContestEventViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -76,9 +50,8 @@ public class ContestEventAdapter extends RecyclerView.Adapter<ContestEventViewHo
         return contestEvents== null ? null : contestEvents.get(position);
     }
 
-    public ContestEventAdapter(ObservableList<ContestEvent> contestEvents, EventListViewModel viewModel) {
+    public ContestEventAdapter(RealmList<ContestEvent> contestEvents, EventListViewModel viewModel) {
         this.contestEvents = contestEvents;
         this.viewModel = viewModel;
-        contestEvents.addOnListChangedCallback(callback);
     }
 }

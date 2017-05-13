@@ -10,4 +10,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.chtv.korsoapp.activities.EventActivity">
 
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/event_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_below="@+id/event_name"
+        android:id="@+id/sessions_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sessions:"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/sessionlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sessions_text">
+
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

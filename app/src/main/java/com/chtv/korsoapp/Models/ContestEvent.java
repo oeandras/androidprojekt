@@ -9,15 +9,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by tk95s on 2017. 04. 19..
  */
 
-public class ContestEvent implements Parcelable {
-    List<ContestSession> contestSessions;
+public class ContestEvent extends RealmObject {
+    RealmList<ContestSession> contestSessions;
     String name;
     Date from;
     Date until;
+
+    @PrimaryKey
     String contestEventId;
 
     //region Getter Setters
@@ -25,7 +31,7 @@ public class ContestEvent implements Parcelable {
         return contestSessions;
     }
 
-    public void setContestSessions(List<ContestSession> contestSessions) {
+    public void setContestSessions(RealmList<ContestSession> contestSessions) {
         this.contestSessions = contestSessions;
     }
 
@@ -66,7 +72,7 @@ public class ContestEvent implements Parcelable {
         this.name = name;
         this.from = from;
         this.until = until;
-        contestSessions = new ArrayList<ContestSession>();
+        contestSessions = new RealmList<ContestSession>();
         this.contestEventId = contestEventId;
     }
 
@@ -74,41 +80,8 @@ public class ContestEvent implements Parcelable {
         this(name, from, until, UUID.randomUUID().toString());
     }
 
+    //empty constructor for realm
+    public ContestEvent(){
 
-    //ContestSession list is not in the parcel due to circular references
-    protected ContestEvent(Parcel in) {
-        name = in.readString();
-        long tmpFrom = in.readLong();
-        from = tmpFrom != -1 ? new Date(tmpFrom) : null;
-        long tmpUntil = in.readLong();
-        until = tmpUntil != -1 ? new Date(tmpUntil) : null;
-        contestEventId = in.readString();
     }
-
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeLong(from != null ? from.getTime() : -1L);
-        dest.writeLong(until != null ? until.getTime() : -1L);
-        dest.writeString(contestEventId);
-    }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<ContestEvent> CREATOR = new Parcelable.Creator<ContestEvent>() {
-        @Override
-        public ContestEvent createFromParcel(Parcel in) {
-            return new ContestEvent(in);
-        }
-
-        @Override
-        public ContestEvent[] newArray(int size) {
-            return new ContestEvent[size];
-        }
-    };
 }

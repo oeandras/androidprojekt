@@ -8,15 +8,25 @@ import java.util.UUID;
 
 import javax.xml.datatype.Duration;
 
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by tk95s on 2017. 04. 19..
  */
 
-public class PlayerResult implements Parcelable {
+public class PlayerResult extends RealmObject {
     String name;
     Date time; //TODO: Time format
+
+    @Ignore
     Player player;
+
+    @Ignore
     Scoreboard scoreboard;
+
+    @PrimaryKey
     String playerResultId;
 
     //region Getters Setters
@@ -73,40 +83,7 @@ public class PlayerResult implements Parcelable {
     public PlayerResult(Player player, Scoreboard scoreboard, Date time) {
         this(player, scoreboard, time, UUID.randomUUID().toString());
     }
-    //endregion
 
-    //region Parcelable implementation
-    protected PlayerResult(Parcel in) {
-        name = in.readString();
-        time = new Date(in.readLong());
-        player = (Player) in.readValue(Player.class.getClassLoader());
-        scoreboard = (Scoreboard) in.readValue(Scoreboard.class.getClassLoader());
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeLong(time.getTime());
-        dest.writeValue(player);
-        dest.writeValue(scoreboard);
-    }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<PlayerResult> CREATOR = new Parcelable.Creator<PlayerResult>() {
-        @Override
-        public PlayerResult createFromParcel(Parcel in) {
-            return new PlayerResult(in);
-        }
-
-        @Override
-        public PlayerResult[] newArray(int size) {
-            return new PlayerResult[size];
-        }
-    };
+    public PlayerResult(){}
     //endregion
 }

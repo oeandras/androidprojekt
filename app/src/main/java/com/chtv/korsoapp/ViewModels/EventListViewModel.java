@@ -12,18 +12,20 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
+import io.realm.RealmList;
+
 /**
  * Created by cregz on 2017.04.25..
  */
 
 public class EventListViewModel extends BaseObservable {
-    private ObservableList<ContestEvent> contestEvents;
+    private RealmList<ContestEvent> contestEvents;
 
-    public ObservableList<ContestEvent> getContestEvents() {
+    public RealmList<ContestEvent> getContestEvents() {
         return contestEvents;
     }
 
-    public EventListViewModel(ObservableList<ContestEvent> contestEvents) {
+    public EventListViewModel(RealmList<ContestEvent> contestEvents) {
         this.contestEvents = contestEvents;
     }
 

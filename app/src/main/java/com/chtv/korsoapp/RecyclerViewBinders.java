@@ -13,6 +13,8 @@ import com.chtv.korsoapp.ViewModels.EventListViewModel;
 
 import java.util.Date;
 
+import io.realm.RealmList;
+
 /**
  * Created by cregz on 2017.04.25..
  */
@@ -20,7 +22,7 @@ import java.util.Date;
 public class RecyclerViewBinders {
 
     @BindingAdapter({"items", "itemClick"})
-    public static void setItems(RecyclerView view, ObservableList<ContestEvent> items, EventListViewModel viewModel){
+    public static void setItems(RecyclerView view, RealmList<ContestEvent> items, EventListViewModel viewModel){
         RecyclerView.Adapter<?> adapter = view.getAdapter();
         if(adapter == null){
             adapter = new ContestEventAdapter(items, viewModel);
