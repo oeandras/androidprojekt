@@ -7,15 +7,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by tk95s on 2017. 04. 19..
  */
 
-public class ContestSession implements Parcelable {
-    List<Player> players;
-    List<Scoreboard> scoreboards;
+public class ContestSession extends RealmObject {
+    RealmList<Player> players;
+    RealmList<Scoreboard> scoreboards;
+
+    @Ignore
     ContestEvent contestEvent;
+
     String name;
+
+    @PrimaryKey
     String contestSessionId;
 
     //region Getters Setters
@@ -23,7 +33,7 @@ public class ContestSession implements Parcelable {
         return players;
     }
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(RealmList<Player> players) {
         this.players = players;
     }
 
@@ -31,7 +41,7 @@ public class ContestSession implements Parcelable {
         return scoreboards;
     }
 
-    public void setScoreboards(List<Scoreboard> scoreboards) {
+    public void setScoreboards(RealmList<Scoreboard> scoreboards) {
         this.scoreboards = scoreboards;
     }
 
@@ -64,58 +74,18 @@ public class ContestSession implements Parcelable {
     public ContestSession(ContestEvent contestEvent, String name, String contestSessionId) {
         this.contestEvent = contestEvent;
         this.name = contestEvent.getName() + ": " + name;
-        players = new ArrayList<Player>();
-        scoreboards = new ArrayList<Scoreboard>();
+        players = new RealmList<Player>();
+        scoreboards = new RealmList<Scoreboard>();
         this.contestSessionId = contestSessionId;
     }
 
     public ContestSession(ContestEvent contestEvent, String name) {
         this(contestEvent, name, UUID.randomUUID().toString());
     }
+
+    //empty constructor for realm
+    public ContestSession(){}
+
     //endregion
 
-    //region Parcelable implementation
-    protected ContestSession(Parcel in) {
-        if (in.readByte() == 0x01) {
-            players = new ArrayList<Player>();
-            in.readList(players, Player.class.getClassLoader());
-        } else {
-            players = null;
-        }
-        contestEvent = (ContestEvent) in.readValue(ContestEvent.class.getClassLoader());
-        name = in.readString();
-        contestSessionId = in.readString();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        if (players == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(players);
-        }
-        dest.writeValue(contestEvent);
-        dest.writeString(name);
-        dest.writeString(contestSessionId);
-    }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<ContestSession> CREATOR = new Parcelable.Creator<ContestSession>() {
-        @Override
-        public ContestSession createFromParcel(Parcel in) {
-            return new ContestSession(in);
-        }
-
-        @Override
-        public ContestSession[] newArray(int size) {
-            return new ContestSession[size];
-        }
-    };
-    //endregion
 }

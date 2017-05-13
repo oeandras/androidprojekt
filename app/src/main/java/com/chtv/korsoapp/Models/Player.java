@@ -7,14 +7,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by tk95s on 2017. 04. 19..
  */
 
-public class Player implements Parcelable {
-    List<PlayerResult> playerResults;
+public class Player extends RealmObject {
+    RealmList<PlayerResult> playerResults;
     String name;
+
+    @Ignore
     ContestSession contestSession;
+
+    @PrimaryKey
     String playerId;
 
     //region Getters Setters
@@ -38,7 +47,7 @@ public class Player implements Parcelable {
         return playerResults;
     }
 
-    public void setPlayerResults(List<PlayerResult> playerResults) {
+    public void setPlayerResults(RealmList<PlayerResult> playerResults) {
         this.playerResults = playerResults;
     }
 
@@ -56,45 +65,14 @@ public class Player implements Parcelable {
     public Player(ContestSession session, String name, String playerId) {
         this.contestSession = session;
         this.name = name;
-        playerResults = new ArrayList<PlayerResult>();
+        playerResults = new RealmList<PlayerResult>();
         this.playerId = playerId;
     }
 
     public Player(ContestSession session, String name){
         this(session, name, UUID.randomUUID().toString());
     }
-    //endregion
 
-    //region Parcelable implementation
-    protected Player(Parcel in) {
-        name = in.readString();
-        contestSession = (ContestSession) in.readValue(ContestSession.class.getClassLoader());
-        playerId = in.readString();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeValue(contestSession);
-        dest.writeString(playerId);
-    }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Player> CREATOR = new Parcelable.Creator<Player>() {
-        @Override
-        public Player createFromParcel(Parcel in) {
-            return new Player(in);
-        }
-
-        @Override
-        public Player[] newArray(int size) {
-            return new Player[size];
-        }
-    };
+    public Player(){}
     //endregion
 }

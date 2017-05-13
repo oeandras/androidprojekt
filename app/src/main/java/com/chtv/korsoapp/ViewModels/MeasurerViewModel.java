@@ -161,7 +161,7 @@ public class MeasurerViewModel extends BaseViewModel implements Observer {
         void onStartCountDown();
         void onCountDownFinished();
 
-        void onStartMeasure(long base);
+        void onStartMeasure();
         void onStopMeasure();
 
     }

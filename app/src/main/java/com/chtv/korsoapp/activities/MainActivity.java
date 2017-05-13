@@ -18,43 +18,48 @@ import com.chtv.korsoapp.ViewModels.MainViewModel;
 import com.chtv.korsoapp.databinding.ActivityMainBinding;
 
 import java.util.Calendar;
+import java.util.UUID;
+
+import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity implements MainViewModel.NewEventListener{
 
-    TextView ido, rezges;
-    Button gomb;
-    RezgesTarolo Ztarolo;
-
-    SensorManager sensorManager;
-
+    private MainViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        binding.setViewModel(new MainViewModel(this));
+        viewModel = new MainViewModel(this);
+        binding.setViewModel(viewModel);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        viewModel.onResume();
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        viewModel.onPause();
 
     }
 
     @Override
     public void onNewPracticeClick() {
-        Toast.makeText(this,"TODO New Practice Click", Toast.LENGTH_SHORT).show();
-        ContestEvent event = new ContestEvent("Practice", Calendar.getInstance().getTime(), Calendar.getInstance().getTime());
-        ContestSession session = new ContestSession(event, "Practice");
-        Player player = new Player(session, "Player1");
+        //todo: everything
+        //a practice contestevent is created with pracitce contest session and practice player
+        //not persisted to database
+        ContestEvent event = new ContestEvent("Practice", Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), new UUID(0,0).toString());
+        ContestSession session = new ContestSession(event, "Practice", new UUID(0,0).toString());
+        Player player = new Player(session, "Teszt Elek", new UUID(0,0).toString());
         Intent intent = new Intent(this, MeasurerActivity.class);
-        intent.putExtra("player", player);
+        intent.putExtra("player", player.getPlayerId());
+        intent.putExtra("event", event.getContestEventId());
+        intent.putExtra("session", session.getContestSessionId());
         startActivity(intent);
     }
 

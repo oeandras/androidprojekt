@@ -4,11 +4,15 @@
         <variable
             name="contestEvent"
             type="com.chtv.korsoapp.Models.ContestEvent"/>
+        <variable
+            name="viewModel"
+            type="com.chtv.korsoapp.ViewModels.EventListViewModel"/>
     </data>
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:onClick="@{() -> viewModel.onItemClick(contestEvent)}">
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"

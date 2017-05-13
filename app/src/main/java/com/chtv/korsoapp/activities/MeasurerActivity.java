@@ -16,17 +16,29 @@ import android.widget.Chronometer;
 import android.widget.Toast;
 
 import com.chtv.korsoapp.AccelerometerStopwatch;
+import com.chtv.korsoapp.Models.ContestEvent;
+import com.chtv.korsoapp.Models.ContestSession;
 import com.chtv.korsoapp.Models.Player;
+import com.chtv.korsoapp.Models.PlayerResult;
+import com.chtv.korsoapp.Models.Scoreboard;
 import com.chtv.korsoapp.R;
 import com.chtv.korsoapp.ViewModels.MeasurerViewModel;
 import com.chtv.korsoapp.databinding.ActivityMeasurerBinding;
 
 import java.util.Calendar;
+import java.util.UUID;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class MeasurerActivity extends AppCompatActivity implements MeasurerViewModel.IMeasurerView {
     Player player;
-    int score; //TODO: Time format
+    ContestEvent event;
+    ContestSession session;
+
     private MeasurerViewModel viewModel;
+
+    Realm realm = Realm.getDefaultInstance();
 
 
     @Override
@@ -34,8 +46,26 @@ public class MeasurerActivity extends AppCompatActivity implements MeasurerViewM
         super.onCreate(savedInstanceState);
 
         Bundle b = getIntent().getExtras();
-        if(b != null)
-            this.player = b.getParcelable("player");
+        if(b != null) {
+            String playerId = b.getString("player");
+            if(!playerId.equals(new UUID(0,0).toString())) {
+                RealmResults<Player> results = realm.where(Player.class).equalTo("playerId", playerId).findAll();
+                this.player = results.first();
+
+                String eventId = b.getString("event");
+                RealmResults<ContestEvent> resultsEvent = realm.where(ContestEvent.class).equalTo("contestEventId", eventId).findAll();
+                this.event = resultsEvent.first();
+
+                String sessionId = b.getString("session");
+                RealmResults<ContestSession> resultsSession = realm.where(ContestSession.class).equalTo("contestSessionId", sessionId).findAll();
+                this.session = resultsSession.first();
+            }
+            else{
+                this.event = new ContestEvent("Practice", Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), new UUID(0,0).toString());
+                this.session = new ContestSession(event, "Practice", new UUID(0,0).toString());
+                this.player = new Player(session, "Teszt Elek", new UUID(0,0).toString());
+            }
+        }
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         viewModel = new MeasurerViewModel(player, this, new AccelerometerStopwatch(sensorManager));
 
@@ -75,7 +105,7 @@ public class MeasurerActivity extends AppCompatActivity implements MeasurerViewM
     }
 
     @Override
-    public void onStartMeasure(long base) {
+    public void onStartMeasure() {
 
     }
 
@@ -84,6 +114,15 @@ public class MeasurerActivity extends AppCompatActivity implements MeasurerViewM
         Calendar cal = Calendar.getInstance().getInstance();
         cal.setTime(viewModel.PlayerScore);
         Toast.makeText(this, "Your time is: "+ cal.get(Calendar.SECOND)+" seconds.", Toast.LENGTH_SHORT).show();
+        //don't save practice event
+        if(!event.getContestEventId().equals(new UUID(0,0).toString())){
+            realm.beginTransaction();
+            Scoreboard scoreboard = realm.copyToRealm(new Scoreboard(session, "Scoreboard 1", UUID.randomUUID().toString()));
+            PlayerResult result = realm.copyToRealm(new PlayerResult(player,scoreboard, viewModel.PlayerScore, UUID.randomUUID().toString()));
+            player.getPlayerResults().add(result);
+            scoreboard.getPlayerResults().add(result);
+            realm.commitTransaction();
+        }
     }
 
 }

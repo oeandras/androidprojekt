@@ -7,14 +7,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by tk95s on 2017. 04. 19..
  */
 
-public class Scoreboard implements Parcelable {
+public class Scoreboard extends RealmObject {
+    @Ignore
     ContestSession contestSession;
-    List<PlayerResult> playerResults;
+
+    RealmList<PlayerResult> playerResults;
     String name;
+
+    @PrimaryKey
     String scoreboardId;
 
     //region Getters-Setters
@@ -22,7 +31,7 @@ public class Scoreboard implements Parcelable {
         return playerResults;
     }
 
-    public void setPlayerResults(List<PlayerResult> playerResults) {
+    public void setPlayerResults(RealmList<PlayerResult> playerResults) {
         this.playerResults = playerResults;
     }
 
@@ -56,45 +65,16 @@ public class Scoreboard implements Parcelable {
     public Scoreboard(ContestSession contestSession, String name, String scoreboardId) {
         this.contestSession = contestSession;
         this.name = contestSession.getName() + ": " + name;
-        this.playerResults = new ArrayList<PlayerResult>();
+        this.playerResults = new RealmList<PlayerResult>();
         this.scoreboardId=scoreboardId;
     }
 
     public Scoreboard(ContestSession contestSession, String name){
         this(contestSession, name, UUID.randomUUID().toString());
     }
+
+    public Scoreboard(){}
     //endregion
 
-    //region Parcelable iplementation
-    protected Scoreboard(Parcel in) {
-        contestSession = (ContestSession) in.readValue(ContestSession.class.getClassLoader());
-        name = in.readString();
-        scoreboardId = in.readString();
-    }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(contestSession);
-        dest.writeString(name);
-        dest.writeString(scoreboardId);
-    }
-
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Scoreboard> CREATOR = new Parcelable.Creator<Scoreboard>() {
-        @Override
-        public Scoreboard createFromParcel(Parcel in) {
-            return new Scoreboard(in);
-        }
-
-        @Override
-        public Scoreboard[] newArray(int size) {
-            return new Scoreboard[size];
-        }
-    };
-    //endregion
 }
