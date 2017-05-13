@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tk95s on 2017. 04. 19..
@@ -14,13 +15,9 @@ public class Scoreboard implements Parcelable {
     ContestSession contestSession;
     List<PlayerResult> playerResults;
     String name;
+    String scoreboardId;
 
-    public Scoreboard(ContestSession contestSession, String name) {
-        this.contestSession = contestSession;
-        this.name = contestSession.getName() + ": " + name;
-        this.playerResults = new ArrayList<PlayerResult>();
-    }
-
+    //region Getters-Setters
     public List<PlayerResult> getPlayerResults() {
         return playerResults;
     }
@@ -45,15 +42,34 @@ public class Scoreboard implements Parcelable {
         this.name = name;
     }
 
+    public String getScoreboardId() {
+        return scoreboardId;
+    }
+
+    public void setScoreboardId(String scoreboardId) {
+        this.scoreboardId = scoreboardId;
+    }
+    //endregion
+
+
+    //region Constructors
+    public Scoreboard(ContestSession contestSession, String name, String scoreboardId) {
+        this.contestSession = contestSession;
+        this.name = contestSession.getName() + ": " + name;
+        this.playerResults = new ArrayList<PlayerResult>();
+        this.scoreboardId=scoreboardId;
+    }
+
+    public Scoreboard(ContestSession contestSession, String name){
+        this(contestSession, name, UUID.randomUUID().toString());
+    }
+    //endregion
+
+    //region Parcelable iplementation
     protected Scoreboard(Parcel in) {
         contestSession = (ContestSession) in.readValue(ContestSession.class.getClassLoader());
-        if (in.readByte() == 0x01) {
-            playerResults = new ArrayList<PlayerResult>();
-            in.readList(playerResults, PlayerResult.class.getClassLoader());
-        } else {
-            playerResults = null;
-        }
         name = in.readString();
+        scoreboardId = in.readString();
     }
 
     @Override
@@ -64,13 +80,8 @@ public class Scoreboard implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(contestSession);
-        if (playerResults == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(playerResults);
-        }
         dest.writeString(name);
+        dest.writeString(scoreboardId);
     }
 
     @SuppressWarnings("unused")
@@ -85,4 +96,5 @@ public class Scoreboard implements Parcelable {
             return new Scoreboard[size];
         }
     };
+    //endregion
 }

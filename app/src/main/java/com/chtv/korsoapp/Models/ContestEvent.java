@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tk95s on 2017. 04. 19..
@@ -17,14 +18,9 @@ public class ContestEvent implements Parcelable {
     String name;
     Date from;
     Date until;
+    String contestEventId;
 
-    public ContestEvent(String name, Date from, Date until) {
-        this.name = name;
-        this.from = from;
-        this.until = until;
-        contestSessions = new ArrayList<ContestSession>();
-    }
-
+    //region Getter Setters
     public List<ContestSession> getContestSessions() {
         return contestSessions;
     }
@@ -57,19 +53,38 @@ public class ContestEvent implements Parcelable {
         this.until = until;
     }
 
+    public String getContestEventId() {
+        return contestEventId;
+    }
+
+    public void setContestEventId(String contestEventId) {
+        this.contestEventId = contestEventId;
+    }
+    //endregion
+
+    public ContestEvent(String name, Date from, Date until, String contestEventId) {
+        this.name = name;
+        this.from = from;
+        this.until = until;
+        contestSessions = new ArrayList<ContestSession>();
+        this.contestEventId = contestEventId;
+    }
+
+    public ContestEvent(String name, Date from, Date until) {
+        this(name, from, until, UUID.randomUUID().toString());
+    }
+
+
+    //ContestSession list is not in the parcel due to circular references
     protected ContestEvent(Parcel in) {
-        if (in.readByte() == 0x01) {
-            contestSessions = new ArrayList<ContestSession>();
-            in.readList(contestSessions, ContestSession.class.getClassLoader());
-        } else {
-            contestSessions = null;
-        }
         name = in.readString();
         long tmpFrom = in.readLong();
         from = tmpFrom != -1 ? new Date(tmpFrom) : null;
         long tmpUntil = in.readLong();
         until = tmpUntil != -1 ? new Date(tmpUntil) : null;
+        contestEventId = in.readString();
     }
+
 
     @Override
     public int describeContents() {
@@ -78,15 +93,10 @@ public class ContestEvent implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        if (contestSessions == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(contestSessions);
-        }
         dest.writeString(name);
         dest.writeLong(from != null ? from.getTime() : -1L);
         dest.writeLong(until != null ? until.getTime() : -1L);
+        dest.writeString(contestEventId);
     }
 
     @SuppressWarnings("unused")

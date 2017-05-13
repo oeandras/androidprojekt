@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tk95s on 2017. 04. 19..
@@ -14,13 +15,9 @@ public class Player implements Parcelable {
     List<PlayerResult> playerResults;
     String name;
     ContestSession contestSession;
+    String playerId;
 
-    public Player(ContestSession session, String name) {
-        this.contestSession = session;
-        this.name = name;
-        playerResults = new ArrayList<PlayerResult>();
-    }
-
+    //region Getters Setters
     public String getName() {
         return name;
     }
@@ -45,15 +42,34 @@ public class Player implements Parcelable {
         this.playerResults = playerResults;
     }
 
+    public String getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(String playerId) {
+        this.playerId = playerId;
+    }
+    //endregion
+
+
+    //region Contructors
+    public Player(ContestSession session, String name, String playerId) {
+        this.contestSession = session;
+        this.name = name;
+        playerResults = new ArrayList<PlayerResult>();
+        this.playerId = playerId;
+    }
+
+    public Player(ContestSession session, String name){
+        this(session, name, UUID.randomUUID().toString());
+    }
+    //endregion
+
+    //region Parcelable implementation
     protected Player(Parcel in) {
-        if (in.readByte() == 0x01) {
-            playerResults = new ArrayList<PlayerResult>();
-            in.readList(playerResults, PlayerResult.class.getClassLoader());
-        } else {
-            playerResults = null;
-        }
         name = in.readString();
         contestSession = (ContestSession) in.readValue(ContestSession.class.getClassLoader());
+        playerId = in.readString();
     }
 
     @Override
@@ -63,14 +79,9 @@ public class Player implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        if (playerResults == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(playerResults);
-        }
         dest.writeString(name);
         dest.writeValue(contestSession);
+        dest.writeString(playerId);
     }
 
     @SuppressWarnings("unused")
@@ -85,4 +96,5 @@ public class Player implements Parcelable {
             return new Player[size];
         }
     };
+    //endregion
 }
