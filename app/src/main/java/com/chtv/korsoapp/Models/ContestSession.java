@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by tk95s on 2017. 04. 19..
@@ -15,14 +16,9 @@ public class ContestSession implements Parcelable {
     List<Scoreboard> scoreboards;
     ContestEvent contestEvent;
     String name;
+    String contestSessionId;
 
-    public ContestSession(ContestEvent contestEvent, String name) {
-        this.contestEvent = contestEvent;
-        this.name = contestEvent.getName() + ": " + name;
-        players = new ArrayList<Player>();
-        scoreboards = new ArrayList<Scoreboard>();
-    }
-
+    //region Getters Setters
     public List<Player> getPlayers() {
         return players;
     }
@@ -55,6 +51,30 @@ public class ContestSession implements Parcelable {
         this.name = name;
     }
 
+    public String getContestSessionId() {
+        return contestSessionId;
+    }
+
+    public void setContestSessionId(String contestSessionId) {
+        this.contestSessionId = contestSessionId;
+    }
+    //endregion
+
+    //region Constructors
+    public ContestSession(ContestEvent contestEvent, String name, String contestSessionId) {
+        this.contestEvent = contestEvent;
+        this.name = contestEvent.getName() + ": " + name;
+        players = new ArrayList<Player>();
+        scoreboards = new ArrayList<Scoreboard>();
+        this.contestSessionId = contestSessionId;
+    }
+
+    public ContestSession(ContestEvent contestEvent, String name) {
+        this(contestEvent, name, UUID.randomUUID().toString());
+    }
+    //endregion
+
+    //region Parcelable implementation
     protected ContestSession(Parcel in) {
         if (in.readByte() == 0x01) {
             players = new ArrayList<Player>();
@@ -62,14 +82,9 @@ public class ContestSession implements Parcelable {
         } else {
             players = null;
         }
-        if (in.readByte() == 0x01) {
-            scoreboards = new ArrayList<Scoreboard>();
-            in.readList(scoreboards, Scoreboard.class.getClassLoader());
-        } else {
-            scoreboards = null;
-        }
         contestEvent = (ContestEvent) in.readValue(ContestEvent.class.getClassLoader());
         name = in.readString();
+        contestSessionId = in.readString();
     }
 
     @Override
@@ -85,14 +100,9 @@ public class ContestSession implements Parcelable {
             dest.writeByte((byte) (0x01));
             dest.writeList(players);
         }
-        if (scoreboards == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(scoreboards);
-        }
         dest.writeValue(contestEvent);
         dest.writeString(name);
+        dest.writeString(contestSessionId);
     }
 
     @SuppressWarnings("unused")
@@ -107,4 +117,5 @@ public class ContestSession implements Parcelable {
             return new ContestSession[size];
         }
     };
+    //endregion
 }

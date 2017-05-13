@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.xml.datatype.Duration;
 
@@ -16,7 +17,9 @@ public class PlayerResult implements Parcelable {
     Date time; //TODO: Time format
     Player player;
     Scoreboard scoreboard;
+    String playerResultId;
 
+    //region Getters Setters
     public Date getTime() {
         return time;
     }
@@ -49,13 +52,30 @@ public class PlayerResult implements Parcelable {
         this.scoreboard = scoreboard;
     }
 
-    public PlayerResult(Player player, Scoreboard scoreboard, Date time) {
+    public String getPlayerResultId() {
+        return playerResultId;
+    }
+
+    public void setPlayerResultId(String playerResultId) {
+        this.playerResultId = playerResultId;
+    }
+    //endregion
+
+    //region Constructors
+    public PlayerResult(Player player, Scoreboard scoreboard, Date time, String playerResultId) {
         this.player = player;
         this.time = time;
         this.scoreboard = scoreboard;
         this.name = scoreboard.getName() + ": " + player.getName();
+        this.playerResultId=playerResultId;
     }
 
+    public PlayerResult(Player player, Scoreboard scoreboard, Date time) {
+        this(player, scoreboard, time, UUID.randomUUID().toString());
+    }
+    //endregion
+
+    //region Parcelable implementation
     protected PlayerResult(Parcel in) {
         name = in.readString();
         time = new Date(in.readLong());
@@ -88,4 +108,5 @@ public class PlayerResult implements Parcelable {
             return new PlayerResult[size];
         }
     };
+    //endregion
 }
