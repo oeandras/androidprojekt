@@ -65,7 +65,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/until_date_edittext"
-        android:layout_above="@+id/save_button">
+        android:layout_above="@+id/save_button"
+        android:focusable="true"
+        android:clickable="true"
+        android:focusableInTouchMode="true">
 
     </android.support.v7.widget.RecyclerView>
 

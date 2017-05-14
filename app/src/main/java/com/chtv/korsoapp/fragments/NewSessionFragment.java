@@ -3,13 +3,33 @@ package com.chtv.korsoapp.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.chtv.korsoapp.Models.ContestSession;
 import com.chtv.korsoapp.R;
+import com.chtv.korsoapp.adapters.SessionListAdapter;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+import io.realm.OrderedRealmCollection;
+import io.realm.OrderedRealmCollectionSnapshot;
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +48,7 @@ public class NewSessionFragment extends Fragment {
     private String mParam1;
 
     private OnFragmentInteractionListener mListener;
+    private AppCompatEditText sessionName;
 
     public NewSessionFragment() {
         // Required empty public constructor
@@ -64,16 +85,27 @@ public class NewSessionFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_new_session, container, false);
 
         ((TextView)v.findViewById(R.id.event_name)).setText(mParam1);
+        sessionName = (AppCompatEditText) v.findViewById(R.id.session_name_edittext);
+
+        ((Button) v.findViewById(R.id.button_ok)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveButtonCLick();
+            }
+        });
+
+        ((Button) v.findViewById(R.id.cancel_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelClick();
+            }
+        });
+
 
         return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -92,6 +124,16 @@ public class NewSessionFragment extends Fragment {
         mListener = null;
     }
 
+
+    public void saveButtonCLick(){
+        String sName = sessionName.getText().toString();
+        mListener.onSaveSessionClick(sName);
+    }
+
+    public void cancelClick() {
+        mListener.onCancelCLick();
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -104,6 +146,7 @@ public class NewSessionFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        void onSaveSessionClick(String sessionName);
+        void onCancelCLick();
     }
 }

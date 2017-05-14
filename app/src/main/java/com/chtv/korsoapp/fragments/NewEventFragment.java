@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,12 +18,16 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RelativeLayout;
 
+import com.chtv.korsoapp.Models.ContestEvent;
+import com.chtv.korsoapp.Models.ContestSession;
 import com.chtv.korsoapp.R;
 import com.chtv.korsoapp.activities.NewEventActivity;
+import com.chtv.korsoapp.adapters.SessionListAdapter;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -42,6 +48,9 @@ public class NewEventFragment extends Fragment {
     private DateClickListener dateClickListener;
 
     private OnFragmentInteractionListener mListener;
+
+    private RecyclerView sessionList;
+    private ArrayList<ContestSession> sessions;
 
     public NewEventFragment() {
         // Required empty public constructor
@@ -92,6 +101,15 @@ public class NewEventFragment extends Fragment {
             }
         });
 
+        ( v.findViewById(R.id.sessions_list)).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                InputMethodManager inputMethodManager = (InputMethodManager)  getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                return false;
+            }
+        });
+
 
         name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -116,6 +134,12 @@ public class NewEventFragment extends Fragment {
             }
         });
 
+        this.sessionList = (RecyclerView) v.findViewById(R.id.sessions_list);
+        SessionListAdapter adapter = new SessionListAdapter(sessions);
+        sessionList.setAdapter(adapter);
+        sessionList.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
         return v;
     }
 
@@ -124,6 +148,7 @@ public class NewEventFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
+            this.sessions = mListener.getSessions();
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -157,6 +182,7 @@ public class NewEventFragment extends Fragment {
         void onSetUntil(Date until);
         void onAddSessionClick();
         void onSaveClick();
+        ArrayList<ContestSession> getSessions();
     }
 
     private class DateClickListener implements View.OnClickListener {

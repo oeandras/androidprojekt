@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 
 public class NewEventActivity extends AppCompatActivity implements NewEventFragment.OnFragmentInteractionListener, NewSessionFragment.OnFragmentInteractionListener{
 
@@ -35,17 +36,20 @@ public class NewEventActivity extends AppCompatActivity implements NewEventFragm
     private ArrayList<ContestSession> sessions;
 
     private ContestEvent event;
+    private ContestSession session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.sessions = new ArrayList<>();
         setContentView(R.layout.activity_new_event);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         NewEventFragment fragment = NewEventFragment.newInstance();
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.add(R.id.fragment_container, fragment, "event");
         transaction.commit();
-        event = new ContestEvent();
+
 
     }
 
@@ -53,6 +57,8 @@ public class NewEventActivity extends AppCompatActivity implements NewEventFragm
     protected void onResume() {
         super.onResume();
         this.realm = Realm.getDefaultInstance();
+        this.event = new ContestEvent();
+        this.session = new ContestSession();
     }
 
     @Override
@@ -81,24 +87,45 @@ public class NewEventActivity extends AppCompatActivity implements NewEventFragm
 
     @Override
     public void onAddSessionClick() {
+        this.session = new ContestSession();
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         NewSessionFragment fragment = NewSessionFragment.newInstance(eventName);
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.replace(R.id.fragment_container, fragment).addToBackStack("session");
         transaction.commit();
     }
 
     @Override
     public void onSaveClick() {
         //todo: validation
-        this.event.setContestEventId(UUID.randomUUID().toString());
-        realm.beginTransaction();
-        realm.copyToRealm(this.event);
-        realm.commitTransaction();
+        if(this.event.getContestEventId() == null) {
+            this.event.setContestEventId(UUID.randomUUID().toString());
+            if(this.event.getContestSessions() == null){
+                this.event.setContestSessions(new RealmList<ContestSession>(this.sessions.toArray(new ContestSession[this.sessions.size()])));
+            }
+            realm.beginTransaction();
+            realm.copyToRealm(this.event);
+            realm.commitTransaction();
+        }
+        this.finish();
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public ArrayList<ContestSession> getSessions() {
+        return sessions;
+    }
 
+    @Override
+    public void onSaveSessionClick(String sessionName) {
+        //todo: validation
+        this.session.setName(sessionName);
+        this.session.setContestSessionId(UUID.randomUUID().toString());
+        sessions.add(this.session);
+        getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void onCancelCLick() {
+        getSupportFragmentManager().popBackStack();
     }
 }
