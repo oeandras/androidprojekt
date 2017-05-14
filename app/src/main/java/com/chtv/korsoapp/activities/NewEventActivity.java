@@ -1,6 +1,7 @@
 package com.chtv.korsoapp.activities;
 
 import android.app.DatePickerDialog;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -147,4 +148,5 @@ public class NewEventActivity extends AppCompatActivity implements NewEventFragm
     public void onCancelCLick() {
         getSupportFragmentManager().popBackStack();
     }
+    
 }
