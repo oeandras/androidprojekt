@@ -156,7 +156,7 @@ public class KorsoApp extends Application {
         };
         Realm.init(this);
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
-                .name("TestRealm3")
+                .name("TestRealm7")
                 .initialData(initialTransaction)
                 .schemaVersion(0)
                 .deleteRealmIfMigrationNeeded()

@@ -10,6 +10,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.chtv.korsoapp.Models.ContestEvent;
 import com.chtv.korsoapp.Models.ContestSession;
@@ -97,8 +98,26 @@ public class NewEventActivity extends AppCompatActivity implements NewEventFragm
 
     @Override
     public void onSaveClick() {
-        //todo: validation
-        if(this.event.getContestEventId() == null) {
+        AppCompatEditText seged = (AppCompatEditText) findViewById(R.id.event_name_edittext);
+        this.eventName = seged.getText().toString();
+        this.event.setName(seged.getText().toString());
+        if(eventName.equals(null) || eventName.equals(""))
+        {
+            Toast.makeText(this,"Missing Event Name!", Toast.LENGTH_SHORT).show();
+        }
+        else if(from==null)
+        {
+            Toast.makeText(this,"Missing From Date!", Toast.LENGTH_SHORT).show();
+        }
+        else if(until==null)
+        {
+            Toast.makeText(this,"Missing Until Date!", Toast.LENGTH_SHORT).show();
+        }
+        else if(until.before(from))
+        {
+            Toast.makeText(this,"Until date before From date!", Toast.LENGTH_SHORT).show();
+        }
+        else if(this.event.getContestEventId() == null) {
             this.event.setContestEventId(UUID.randomUUID().toString());
             if(this.event.getContestSessions() == null){
                 this.event.setContestSessions(new RealmList<ContestSession>(this.sessions.toArray(new ContestSession[this.sessions.size()])));
@@ -106,8 +125,8 @@ public class NewEventActivity extends AppCompatActivity implements NewEventFragm
             realm.beginTransaction();
             realm.copyToRealm(this.event);
             realm.commitTransaction();
+            this.finish();
         }
-        this.finish();
     }
 
     @Override
