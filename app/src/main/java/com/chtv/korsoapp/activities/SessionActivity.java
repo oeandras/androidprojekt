@@ -3,18 +3,23 @@ package com.chtv.korsoapp.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.chtv.korsoapp.Models.ContestSession;
 import com.chtv.korsoapp.Models.Player;
+import com.chtv.korsoapp.Models.Scoreboard;
 import com.chtv.korsoapp.R;
+import com.chtv.korsoapp.adapters.ScoreboardListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmResults;
 
 public class SessionActivity extends AppCompatActivity {
     Player selectedPlayer;
@@ -26,6 +31,7 @@ public class SessionActivity extends AppCompatActivity {
 
     private TextView sessionName;
     private Button startButton;
+    private RecyclerView scoreboards;
 
     private String playerId;
     private String sessionId;
@@ -62,6 +68,8 @@ public class SessionActivity extends AppCompatActivity {
             }
         });
 
+        scoreboards = (RecyclerView) findViewById(R.id.scoreboard_list);
+
     }
 
     @Override
@@ -73,6 +81,11 @@ public class SessionActivity extends AppCompatActivity {
         session = realm.where(ContestSession.class).equalTo("contestSessionId", sessionId).findFirst();
 
         sessionName.setText(session.getName());
+        List<Scoreboard> scores = realm.where(ContestSession.class).equalTo("contestSessionId", sessionId).findFirst().getScoreboards();
+        if(scores == null)
+            scores = new ArrayList<Scoreboard>();
+        ScoreboardListAdapter adapter = new ScoreboardListAdapter(scores);
+        scoreboards.setAdapter(adapter);
     }
 
     @Override

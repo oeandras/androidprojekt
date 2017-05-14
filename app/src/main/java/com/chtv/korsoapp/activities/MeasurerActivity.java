@@ -29,6 +29,7 @@ import java.util.Calendar;
 import java.util.UUID;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 public class MeasurerActivity extends AppCompatActivity implements MeasurerViewModel.IMeasurerView {
@@ -40,6 +41,10 @@ public class MeasurerActivity extends AppCompatActivity implements MeasurerViewM
 
     Realm realm = Realm.getDefaultInstance();
 
+    private String playerId;
+    private String eventId;
+    private String sessionId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,25 +52,26 @@ public class MeasurerActivity extends AppCompatActivity implements MeasurerViewM
 
         Bundle b = getIntent().getExtras();
         if(b != null) {
-            String playerId = b.getString("player");
-            if(!playerId.equals(new UUID(0,0).toString())) {
-                RealmResults<Player> results = realm.where(Player.class).equalTo("playerId", playerId).findAll();
-                this.player = results.first();
-
-                String eventId = b.getString("event");
-                RealmResults<ContestEvent> resultsEvent = realm.where(ContestEvent.class).equalTo("contestEventId", eventId).findAll();
-                this.event = resultsEvent.first();
-
-                String sessionId = b.getString("session");
-                RealmResults<ContestSession> resultsSession = realm.where(ContestSession.class).equalTo("contestSessionId", sessionId).findAll();
-                this.session = resultsSession.first();
-            }
-            else{
-                this.event = new ContestEvent("Practice", Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), new UUID(0,0).toString());
-                this.session = new ContestSession(event, "Practice", new UUID(0,0).toString());
-                this.player = new Player(session, "Teszt Elek", new UUID(0,0).toString());
-            }
+            playerId = b.getString("player");
+            eventId = b.getString("event");
+            sessionId = b.getString("session");
         }
+
+        this.realm = Realm.getDefaultInstance();
+
+        if(!playerId.equals(new UUID(0,0).toString()))
+            this.player = realm.where(Player.class).equalTo("playerId", playerId).findFirst();
+        else
+            this.player = new Player(session, "Practic Elek", new UUID(0,0).toString());
+        if(!eventId.equals(new UUID(0,0).toString()))
+            this.event = realm.where(ContestEvent.class).equalTo("contestEventId", eventId).findFirst();
+        else
+            this.event = new ContestEvent("Practice", Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), new UUID(0,0).toString());
+        if(!sessionId.equals(new UUID(0,0).toString()))
+            this.session = realm.where(ContestSession.class).equalTo("contestSessionId", sessionId).findFirst();
+        else
+            this.session = new ContestSession(event, "Practice", new UUID(0,0).toString());
+
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         viewModel = new MeasurerViewModel(player, this, new AccelerometerStopwatch(sensorManager));
 
@@ -78,12 +84,15 @@ public class MeasurerActivity extends AppCompatActivity implements MeasurerViewM
     protected void onResume() {
         super.onResume();
         viewModel.onResume();
+        if(realm.isClosed())
+            this.realm=Realm.getDefaultInstance();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         viewModel.onPause();
+        this.realm.close();
     }
 
     @Override
@@ -114,13 +123,32 @@ public class MeasurerActivity extends AppCompatActivity implements MeasurerViewM
         Calendar cal = Calendar.getInstance().getInstance();
         cal.setTime(viewModel.PlayerScore);
         Toast.makeText(this, "Your time is: "+ cal.get(Calendar.SECOND)+" seconds.", Toast.LENGTH_SHORT).show();
+
         //don't save practice event
         if(!event.getContestEventId().equals(new UUID(0,0).toString())){
+            Scoreboard sb;
+            boolean isThere = false;
+            if(session.getScoreboards().size() > 0){
+                sb = session.getScoreboards().get(session.getScoreboards().size() - 1);
+                isThere = false;
+            }else{
+                sb = new Scoreboard(session, "Scoreboard 1", UUID.randomUUID().toString());
+            }
             realm.beginTransaction();
-            Scoreboard scoreboard = realm.copyToRealm(new Scoreboard(session, "Scoreboard 1", UUID.randomUUID().toString()));
-            PlayerResult result = realm.copyToRealm(new PlayerResult(player,scoreboard, viewModel.PlayerScore, UUID.randomUUID().toString()));
-            player.getPlayerResults().add(result);
-            scoreboard.getPlayerResults().add(result);
+            sb = realm.copyToRealmOrUpdate(sb);
+            session.getScoreboards().add(sb);
+            PlayerResult result = realm.copyToRealm(new PlayerResult(player,sb, viewModel.PlayerScore, UUID.randomUUID().toString()));
+
+            if(player.getPlayerResults() != null)
+                player.getPlayerResults().add(result);
+            else
+                player.setPlayerResults(new RealmList<PlayerResult>(result));
+
+            if(sb.getPlayerResults() != null)
+                sb.getPlayerResults().add(result);
+            else
+                sb.setPlayerResults(new RealmList<PlayerResult>(result));
+
             realm.commitTransaction();
         }
     }

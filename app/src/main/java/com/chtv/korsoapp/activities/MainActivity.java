@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.New
         ContestSession session = new ContestSession(event, "Practice", new UUID(0,0).toString());
 
         Intent intent = new Intent(this, MeasurerActivity.class);
-        intent.putExtra("player", player.getPlayerId());
+        intent.putExtra("player", new UUID(0,0).toString());
         intent.putExtra("event", event.getContestEventId());
         intent.putExtra("session", session.getContestSessionId());
         startActivity(intent);
