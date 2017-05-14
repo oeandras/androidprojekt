@@ -48,7 +48,7 @@ public class EventListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         realm = Realm.getDefaultInstance();
+        realm = Realm.getDefaultInstance();
         Bundle b = getIntent().getExtras();
         if(b != null) {
             playerId = b.getString("player");
@@ -95,6 +95,7 @@ public class EventListActivity extends AppCompatActivity {
     public void onContestEventSelected(ContestEventSelectedEvent contestEvent){
         Intent intent = new Intent(this, EventActivity.class);
         intent.putExtra("contestEvent", contestEvent.getContestEvent().getContestEventId());
+        intent.putExtra("player", playerId);
         startActivity(intent);
 
     }

@@ -27,13 +27,15 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.New
     private MainViewModel viewModel;
 
     Player player;
+
+    private Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         viewModel = new MainViewModel(this);
         binding.setViewModel(viewModel);
-        player = new Player(null,"Teszt Elek", new UUID(0,0).toString());
+
 
     }
 
@@ -41,14 +43,15 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.New
     protected void onResume() {
         super.onResume();
         viewModel.onResume();
-
+        this.realm = Realm.getDefaultInstance();
+        player = realm.where(Player.class).equalTo("name", "Teszt Elek").findFirst();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         viewModel.onPause();
-
+        this.realm.close();
     }
 
     @Override
