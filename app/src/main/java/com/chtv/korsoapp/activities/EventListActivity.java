@@ -18,6 +18,7 @@ import com.chtv.korsoapp.R;
 import com.chtv.korsoapp.ViewModels.EventListViewModel;
 import com.chtv.korsoapp.databinding.ActivityEventListBinding;
 import com.chtv.korsoapp.events.ContestEventSelectedEvent;
+import com.chtv.korsoapp.events.NewEventClick;
 import com.chtv.korsoapp.events.ShowToastEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -90,6 +91,12 @@ public class EventListActivity extends AppCompatActivity {
         intent.putExtra("contestEvent", contestEvent.getContestEvent().getContestEventId());
         startActivity(intent);
 
+    }
+
+    @Subscribe
+    public void onNewEventClick(NewEventClick event){
+        Intent intent = new Intent(this, NewEventActivity.class);
+        startActivity(intent);
     }
 
     /*Testing only*/
