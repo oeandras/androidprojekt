@@ -25,6 +25,10 @@ import io.realm.Realm;
 public class MainActivity extends AppCompatActivity implements MainViewModel.NewEventListener{
 
     private MainViewModel viewModel;
+
+    Player player;
+
+    private Realm realm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,20 +36,22 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.New
         viewModel = new MainViewModel(this);
         binding.setViewModel(viewModel);
 
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         viewModel.onResume();
-
+        this.realm = Realm.getDefaultInstance();
+        player = realm.where(Player.class).equalTo("name", "Teszt Elek").findFirst();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         viewModel.onPause();
-
+        this.realm.close();
     }
 
     @Override
@@ -55,9 +61,9 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.New
         //not persisted to database
         ContestEvent event = new ContestEvent("Practice", Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), new UUID(0,0).toString());
         ContestSession session = new ContestSession(event, "Practice", new UUID(0,0).toString());
-        Player player = new Player(session, "Teszt Elek", new UUID(0,0).toString());
+
         Intent intent = new Intent(this, MeasurerActivity.class);
-        intent.putExtra("player", player.getPlayerId());
+        intent.putExtra("player", new UUID(0,0).toString());
         intent.putExtra("event", event.getContestEventId());
         intent.putExtra("session", session.getContestSessionId());
         startActivity(intent);
@@ -67,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.New
     public void onNewEventClick() {
         Toast.makeText(this,"TODO New Event Click", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, EventListActivity.class);
+        intent.putExtra("player", player.getPlayerId());
         startActivity(intent);
     }
 }
