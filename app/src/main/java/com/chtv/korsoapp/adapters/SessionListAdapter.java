@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.chtv.korsoapp.Models.ContestSession;
 import com.chtv.korsoapp.R;
+import com.chtv.korsoapp.events.ContestSessionSelected;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -33,11 +36,19 @@ public class SessionListAdapter extends RecyclerView.Adapter <SessionListAdapter
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(final ViewHolder viewHolder, int i) {
         ContestSession item = sessions.get(i);
 
         //Setting text view title
         viewHolder.sessionNameTV.setText(item.getName());
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = viewHolder.getAdapterPosition();
+                EventBus.getDefault().post(new ContestSessionSelected((sessions.get(pos))));
+            }
+        });
     }
 
     @Override

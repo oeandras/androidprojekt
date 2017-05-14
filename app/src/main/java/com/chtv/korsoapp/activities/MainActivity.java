@@ -25,12 +25,15 @@ import io.realm.Realm;
 public class MainActivity extends AppCompatActivity implements MainViewModel.NewEventListener{
 
     private MainViewModel viewModel;
+
+    Player player;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         viewModel = new MainViewModel(this);
         binding.setViewModel(viewModel);
+        player = new Player(null,"Teszt Elek", new UUID(0,0).toString());
 
     }
 
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.New
         //not persisted to database
         ContestEvent event = new ContestEvent("Practice", Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), new UUID(0,0).toString());
         ContestSession session = new ContestSession(event, "Practice", new UUID(0,0).toString());
-        Player player = new Player(session, "Teszt Elek", new UUID(0,0).toString());
+
         Intent intent = new Intent(this, MeasurerActivity.class);
         intent.putExtra("player", player.getPlayerId());
         intent.putExtra("event", event.getContestEventId());
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements MainViewModel.New
     public void onNewEventClick() {
         Toast.makeText(this,"TODO New Event Click", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, EventListActivity.class);
+        intent.putExtra("player", player.getPlayerId());
         startActivity(intent);
     }
 }

@@ -43,10 +43,16 @@ public class EventListActivity extends AppCompatActivity {
 
     private Realm realm;
 
+    private String playerId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          realm = Realm.getDefaultInstance();
+        Bundle b = getIntent().getExtras();
+        if(b != null) {
+            playerId = b.getString("player");
+        }
         contestEvents = new RealmList<ContestEvent>(realm.where(ContestEvent.class).findAll().toArray(new ContestEvent[realm.where(ContestEvent.class).findAll().size()]));
         name = "";
         from = null;
