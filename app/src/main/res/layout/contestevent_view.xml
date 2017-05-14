@@ -11,32 +11,57 @@
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/view_vertical_margin"
         android:orientation="vertical"
+        android:layout_marginBottom="@dimen/view_vertical_margin"
         android:onClick="@{() -> viewModel.onItemClick(contestEvent)}">
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/view_horizontal_margin"
+            android:layout_marginLeft="@dimen/view_horizontal_margin"
+            android:textSize="@dimen/small_text_size"
+            android:layout_marginBottom="2dp"
             android:text="@{contestEvent.name, default=Name}"/>
 
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/view_horizontal_margin"
+            android:layout_marginEnd="@dimen/view_horizontal_margin"
+            android:layout_marginLeft="@dimen/view_horizontal_margin"
+            android:layout_marginRight="@dimen/view_horizontal_margin"
+            android:layout_marginTop="2dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/view_vertical_margin"
+                android:layout_marginRight="@dimen/view_vertical_margin"
+                android:textSize="@dimen/small_text_size"
                 android:text="@{contestEvent.from, default=from}"
                 android:layout_weight="1"/>
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/small_text_size"
+                android:layout_marginStart="@dimen/view_vertical_margin"
+                android:layout_marginLeft="@dimen/view_vertical_margin"
                 android:text="@{contestEvent.until, default=to}"
                 android:layout_weight="1"/>
-
         </android.support.v7.widget.LinearLayoutCompat>
+        <View
+            android:layout_marginStart="@dimen/view_vertical_margin"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginLeft="@dimen/view_horizontal_margin"
+            android:layout_marginRight="@dimen/view_horizontal_margin"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
     </android.support.v7.widget.LinearLayoutCompat>
 
 </layout>

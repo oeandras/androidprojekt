@@ -20,24 +20,24 @@
             android:id="@+id/hello"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Welcome to BeerContest!"
-            android:textSize="30sp" />
-
-        <Button
-            android:id="@+id/practice_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/hello"
-            android:text="New practice!"
-            android:onClick="@{() -> viewModel.onNewPracticeClick()}"/>
-
+            android:text="Welcome to Beer Contest!"
+            android:textSize="@dimen/h1_size" />
         <Button
             android:id="@+id/event_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/practice_button"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
             android:text="New event!"
             android:onClick="@{() -> viewModel.onNewEventClick()}"/>
+        <Button
+            android:id="@+id/practice_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/event_button"
+            android:text="New practice!"
+            android:onClick="@{() -> viewModel.onNewPracticeClick()}"/>
 
     </RelativeLayout>
 </layout>

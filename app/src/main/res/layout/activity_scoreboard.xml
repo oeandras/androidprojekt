@@ -11,24 +11,36 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.chtv.korsoapp.activities.ScoreboardActivity">
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/session_name_textview"
+    <TextView
+        android:id="@+id/scoreboard_name_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Session Name"
+        android:textSize="@dimen/h1_size"
+        android:text="Scoreboard Name"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="26dp"/>
-
+        android:layout_marginBottom="16dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/h2_size"
+        android:text="Player results: "
+        android:layout_marginBottom="8dp"
+        android:layout_below="@+id/scoreboard_name_textview"
+        android:id="@+id/resultTextView" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/score_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/session_name_textview"
+        android:layout_below="@+id/resultTextView"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
         app:layoutManager="LinearLayoutManager">
-
     </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

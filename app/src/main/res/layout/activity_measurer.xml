@@ -25,15 +25,15 @@
             android:id="@+id/playername_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/h2_size"
             android:text="@{viewModel.getPlayerName(), default=PlayerName}"/>
-
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/countdown_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/playername_text"
             android:gravity="center"
-            android:textSize="32sp"
+            android:textSize="@dimen/h1_size"
             android:text="@{viewModel.state == MeasurerViewModelState.COUNT_DOWN ? viewModel.remainingTime : viewModel.elapsedTimeString, default=00}"/>
 
     </RelativeLayout>

@@ -15,35 +15,40 @@
         android:id="@+id/session_name_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24dp"
+        android:textSize="@dimen/h1_size"
         android:text="Session Name"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Scoreboards: "
-        android:layout_below="@+id/session_name_textview"
-        android:id="@+id/textView" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/scoreboard_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/start_button"
-        app:layoutManager="LinearLayoutManager">
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"/>
     <Button
         android:id="@+id/start_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start Measure"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@id/session_name_textview"
         android:layout_centerHorizontal="true" />
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/h2_size"
+        android:text="Scoreboards: "
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/start_button"
+        android:id="@+id/textView" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/scoreboard_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        app:layoutManager="LinearLayoutManager">
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

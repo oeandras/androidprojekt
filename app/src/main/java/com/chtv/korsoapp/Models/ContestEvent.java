@@ -27,7 +27,7 @@ public class ContestEvent extends RealmObject {
     String contestEventId;
 
     //region Getter Setters
-    public List<ContestSession> getContestSessions() {
+    public RealmList<ContestSession> getContestSessions() {
         return contestSessions;
     }
 
