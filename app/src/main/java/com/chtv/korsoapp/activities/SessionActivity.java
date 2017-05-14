@@ -13,6 +13,10 @@ import com.chtv.korsoapp.Models.Player;
 import com.chtv.korsoapp.Models.Scoreboard;
 import com.chtv.korsoapp.R;
 import com.chtv.korsoapp.adapters.ScoreboardListAdapter;
+import com.chtv.korsoapp.events.ScoreBoardSelected;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,11 +90,22 @@ public class SessionActivity extends AppCompatActivity {
             scores = new ArrayList<Scoreboard>();
         ScoreboardListAdapter adapter = new ScoreboardListAdapter(scores);
         scoreboards.setAdapter(adapter);
+
+        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         this.realm.close();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onScoreBoardSelected(ScoreBoardSelected event){
+        Intent intent = new Intent(this, ScoreboardActivity.class);
+        intent.putExtra("scoreboard", event.getScoreboard().getScoreboardId());
+        intent.putExtra("session", session.getContestSessionId());
+        startActivity(intent);
     }
 }

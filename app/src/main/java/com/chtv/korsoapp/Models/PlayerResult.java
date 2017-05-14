@@ -76,7 +76,7 @@ public class PlayerResult extends RealmObject {
         this.player = player;
         this.time = time;
         this.scoreboard = scoreboard;
-        this.name = scoreboard.getName() + ": " + player.getName();
+        this.name = player.getName();
         this.playerResultId=playerResultId;
     }
 

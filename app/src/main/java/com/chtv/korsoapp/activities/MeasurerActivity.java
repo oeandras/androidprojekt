@@ -130,13 +130,15 @@ public class MeasurerActivity extends AppCompatActivity implements MeasurerViewM
             boolean isThere = false;
             if(session.getScoreboards().size() > 0){
                 sb = session.getScoreboards().get(session.getScoreboards().size() - 1);
-                isThere = false;
+                isThere = true;
             }else{
                 sb = new Scoreboard(session, "Scoreboard 1", UUID.randomUUID().toString());
             }
             realm.beginTransaction();
             sb = realm.copyToRealmOrUpdate(sb);
-            session.getScoreboards().add(sb);
+            //I don't even know what I am doing
+            if(!isThere)
+                session.getScoreboards().add(sb);
             PlayerResult result = realm.copyToRealm(new PlayerResult(player,sb, viewModel.PlayerScore, UUID.randomUUID().toString()));
 
             if(player.getPlayerResults() != null)
