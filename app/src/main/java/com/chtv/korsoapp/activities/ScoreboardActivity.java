@@ -41,7 +41,7 @@ public class ScoreboardActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_scoreboard);
         scores = (RecyclerView) findViewById(R.id.score_list);
-        sessionName = (TextView) findViewById(R.id.session_name_textview);
+        sessionName = (TextView) findViewById(R.id.scoreboard_name_textview);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ScoreboardActivity extends AppCompatActivity {
         List<PlayerResult> results = realm.where(Scoreboard.class).equalTo("scoreboardId", scoreBoardId).findFirst().getPlayerResults();
         PlayerResultListAdapter adapter = new PlayerResultListAdapter(results);
         scores.setAdapter(adapter);
-        sessionName.setText(realm.where(ContestSession.class).equalTo("contestSessionId", sessionId).findFirst().getName());
+        sessionName.setText(realm.where(Scoreboard.class).equalTo("scoreboardId", scoreBoardId).findFirst().getName());
 
     }
 

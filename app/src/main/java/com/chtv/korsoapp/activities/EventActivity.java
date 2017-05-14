@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.chtv.korsoapp.Models.ContestEvent;
 import com.chtv.korsoapp.Models.ContestSession;
@@ -61,7 +62,7 @@ public class EventActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_event);
-        AppCompatTextView eventNameTV = (AppCompatTextView) findViewById(R.id.event_name);
+        TextView eventNameTV = (TextView) findViewById(R.id.event_text);
         eventNameTV.setText(contestEvent.getName());
 
         sessionList = (RecyclerView) findViewById(R.id.session_list);
